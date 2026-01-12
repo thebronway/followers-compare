@@ -98,7 +98,9 @@ const FileDrop = ({ label, onFileLoaded, fileData, fileName, color = "indigo", f
                 </p>
                 {!allowMultiple && <p className="text-sm opacity-75">{fileData.length} users found</p>}
               </div>
-              <span className="text-xs uppercase tracking-wide font-semibold opacity-50">Click to replace</span>
+              <span className="text-xs uppercase tracking-wide font-semibold opacity-50">
+                {allowMultiple ? "Click to add more" : "Click to replace"}
+              </span>
             </>
           ) : (
             <>

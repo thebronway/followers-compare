@@ -6,7 +6,7 @@ import InstructionsModal from '../components/InstructionsModal';
 import { parseFile } from '../utils/parser';
 import { processLists } from '../utils/logic';
 import { downloadExcel } from '../utils/export';
-import { Users, UserMinus, UserPlus, Download, Info, ChevronDown, ChevronUp, AlertTriangle } from 'lucide-react';
+import { Users, UserMinus, UserPlus, Download, Info, ChevronDown, ChevronUp, AlertTriangle, RotateCcw } from 'lucide-react';
 
 const Dashboard = () => {
   const [followers, setFollowers] = useState([]);
@@ -65,6 +65,15 @@ const Dashboard = () => {
     });
   };
 
+  const handleReset = () => {
+    setFollowers([]);
+    setFollowing([]);
+    setFollowersName(null);
+    setFollowingName(null);
+    setStats(null);
+    setIsCollapsed(false);
+  };
+
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <InstructionsModal isOpen={showInstructions} onClose={() => setShowInstructions(false)} />
@@ -81,12 +90,22 @@ const Dashboard = () => {
             </button>
           )}
         </h2>
-        <button 
-          onClick={() => setShowInstructions(true)}
-          className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 flex items-center gap-1"
-        >
-          <Info size={16} /> Instructions
-        </button>
+        <div className="flex items-center gap-3">
+          {stats && (
+            <button 
+              onClick={handleReset}
+              className="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 flex items-center gap-1 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-lg transition-colors"
+            >
+              <RotateCcw size={16} /> Start Over
+            </button>
+          )}
+          <button 
+            onClick={() => setShowInstructions(true)}
+            className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 flex items-center gap-1"
+          >
+            <Info size={16} /> Instructions
+          </button>
+        </div>
       </div>
 
       <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-500 ease-in-out overflow-hidden ${isCollapsed ? 'max-h-0 opacity-0 m-0' : 'max-h-[500px] opacity-100'}`}>

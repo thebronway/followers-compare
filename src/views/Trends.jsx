@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import FileDrop from '../components/FileDrop';
 import { parseFile } from '../utils/parser';
-import { TrendingUp, Calendar, UserPlus, UserMinus, X, PlayCircle, FileText, Trash2, AlertCircle } from 'lucide-react';
+import { TrendingUp, Calendar, UserPlus, UserMinus, RotateCcw, PlayCircle, FileText, Trash2, AlertCircle } from 'lucide-react';
 
 const Trends = () => {
   const [stagedFiles, setStagedFiles] = useState([]);
@@ -175,9 +175,9 @@ const Trends = () => {
              </div>
              <button 
                 onClick={clearAll}
-                className="flex items-center gap-2 text-sm font-medium text-slate-500 hover:text-indigo-600 px-3 py-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors"
+                className="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 flex items-center gap-1 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-lg transition-colors"
              >
-               <X size={16} /> Start New Analysis
+               <RotateCcw size={16} /> Start Over
              </button>
           </div>
 
