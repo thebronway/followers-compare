@@ -71,7 +71,7 @@ const Dashboard = () => {
 
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
-          Dashboard
+          Analyze Followers
           {stats && (
             <button 
               onClick={() => setIsCollapsed(!isCollapsed)}

@@ -93,9 +93,14 @@ const Trends = () => {
           <TrendingUp className="text-indigo-600 dark:text-indigo-400 shrink-0 mt-1" size={24} />
           <div>
             <h2 className="text-lg font-bold text-indigo-900 dark:text-white">Trend Analysis</h2>
-            <p className="text-sm text-indigo-700 dark:text-indigo-300">
-              Queue up multiple files (JSON or Excel) from different dates. We will sort them chronologically and show the timeline of who followed/unfollowed you.
-            </p>
+            <div className="text-sm text-indigo-700 dark:text-indigo-300 space-y-1 mt-1">
+              <p>
+                Upload multiple historical export files to visualize your follower changes over time.
+              </p>
+              <p className="font-medium">
+                <span className="font-bold">Important:</span> Do not modify the structure of your Excel files. Ensure the file name contains the date (YYYY-MM-DD) so we can sort them correctly.
+              </p>
+            </div>
           </div>
         </div>
       </div>

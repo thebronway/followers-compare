@@ -1,10 +1,28 @@
-import React from 'react';
-import { ShieldCheck } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { ShieldCheck, Moon, Sun } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
   const isLegal = ['/privacy', '/terms', '/about', '/disclaimer'].includes(location.pathname);
+
+  const [isDark, setIsDark] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') === 'dark' || 
+        (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (isDark) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDark]);
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans flex flex-col">
@@ -30,7 +48,15 @@ const MainLayout = ({ children }) => {
               </Link>
             </div>
 
-            <span className="text-xs font-medium px-3 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-full border border-emerald-200 dark:border-emerald-800">
+            <button
+              onClick={() => setIsDark(!isDark)}
+              className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
+              aria-label="Toggle Theme"
+            >
+              {isDark ? <Sun size={20} /> : <Moon size={20} />}
+            </button>
+
+            <span className="hidden sm:inline-block text-xs font-medium px-3 py-1 bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-full border border-emerald-200 dark:border-emerald-800">
               🔒 Local & Secure
             </span>
           </div>
@@ -52,7 +78,7 @@ const MainLayout = ({ children }) => {
             <Link to="/terms" className="hover:text-indigo-500 transition-colors">Terms of Service</Link>
             <Link to="/disclaimer" className="hover:text-indigo-500 transition-colors">Disclaimer</Link>
           </div>
-          <p className="mt-6 text-xs opacity-50">&copy; {new Date().getFullYear()} FollowersCompare v0.1. All rights reserved.</p>
+          <p className="mt-6 text-xs opacity-50">&copy; {new Date().getFullYear()} FollowersCompare | v0.2 | All rights reserved.</p>
         </div>
       </footer>
     </div>
