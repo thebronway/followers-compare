@@ -108,7 +108,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-500 ease-in-out overflow-hidden ${isCollapsed ? 'max-h-0 opacity-0 m-0' : 'max-h-[500px] opacity-100'}`}>
+      <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-500 ease-in-out overflow-hidden ${isCollapsed ? 'max-h-0 opacity-0 m-0 p-0' : 'max-h-[1000px] opacity-100 p-1'}`}>
         <FileDrop 
           label="Upload Followers" 
           color="pink"
