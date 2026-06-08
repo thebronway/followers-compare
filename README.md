@@ -1,6 +1,10 @@
 # Followers Compare & Trend Analysis
 
+![Version](https://img.shields.io/badge/version-v0.2.2-blue.svg)
+
 A local, privacy-focused tool to analyze your Instagram connections. Compare your "Followers" vs "Following" to see who isn't following you back, and track follower trends (gains/losses) over time using historical data.
+
+## Try it yourself: [Live Site](https://followercompare.conway.im/)  
 
 ## Features
 
@@ -11,22 +15,6 @@ A local, privacy-focused tool to analyze your Instagram connections. Compare you
 * **Trend Analysis:** Upload multiple historical export files (Excel or JSON) to generate a timeline of exactly when you gained or lost specific followers.
 * **Privacy First:** All data processing happens **locally in your browser**. No data is ever sent to an external server.
 * **File Support:** Supports both new and legacy Instagram export formats (JSON & HTML).
-
-## How to Run (Docker)
-
-The easiest way to run this application is using Docker.
-
-1. **Build the Image**
-   ```bash
-   docker build --no-cache -t followers-compare .
-   ```
-
-2. **Run the Container**
-   ```bash
-   docker run -d -p 3000:80 --name followers-compare followers-compare
-   ```
-
-Access the app at: `http://localhost:3000`
 
 ## How to Get Your Data
 
@@ -41,17 +29,21 @@ Access the app at: `http://localhost:3000`
     * `followers_1.json` (or `.html`)
     * `following.json` (or `.html`)
 
-## Local Development
+## Screenshots
 
-If you want to run this without Docker:
+<details>
+<summary>Click to expand screenshots</summary>
 
-```bash
-# Install dependencies
-npm install
+#### Instructions
+<img src="./public/screenshots/0.2-instructions.png" alt="Calendar Screenshot" width="600" alt="Site Instructions"> 
 
-# Start development server
-npm run dev
-```
+#### Not Following Back
+<img src="./public/screenshots/0.2-not_following_back.png" alt="Calendar Screenshot" width="600" alt="Not Following Back">  
+
+#### Trends Over Time
+<img src="./public/screenshots/0.2-trends.png" alt="Calendar Screenshot" width="600" alt="Trends">  
+
+</details>
 
 ## Disclaimer
 
@@ -59,6 +51,11 @@ This tool is not affiliated with, endorsed by, or associated with Instagram or M
 
 **Note:** "Lost Followers" or "Not Following Back" lists may include users who have deactivated or deleted their accounts, as they remain in your history data but cannot be found publicly.
 
-## Acknowledgments
+## Author
+Check out my other projects at [brian.conway.im](https://brian.conway.im/).
+Find this or any of my other projects useful or helpful? [Support my work (Buy me a coffee)](https://buymeacoffee.com/brianconway).
 
-This project and its codebase were created with the assistance of AI tools.
+## Acknowledgments
+This project was coded with AI assistance, but fully reviewed, tested, and approved by hand. See [AIACKNOWLEDGMENT.md](AIACKNOWLEDGMENT.md) for details.
+
+*This software is provided "as is", without warranty of any kind, express or implied.*

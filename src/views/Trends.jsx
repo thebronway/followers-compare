@@ -107,8 +107,8 @@ const Trends = () => {
 
       {/* --- STAGE 1: UPLOAD & QUEUE --- */}
       {snapshots.length === 0 && (
-        <div className="space-y-6">
-          <FileDrop 
+        <div className="space-y-6 p-1">
+          <FileDrop
             label="Add Files to Queue" 
             color="indigo"
             allowMultiple={true}

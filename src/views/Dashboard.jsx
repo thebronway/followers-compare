@@ -78,35 +78,44 @@ const Dashboard = () => {
     <div className="space-y-8 animate-in fade-in duration-500">
       <InstructionsModal isOpen={showInstructions} onClose={() => setShowInstructions(false)} />
 
-      <div className="flex justify-between items-center">
-        <h2 className="text-xl font-bold dark:text-white flex items-center gap-2">
-          Analyze Followers
-          {stats && (
-            <button 
-              onClick={() => setIsCollapsed(!isCollapsed)}
-              className="text-xs font-normal text-slate-500 hover:text-primary flex items-center bg-slate-100 dark:bg-slate-800 px-2 py-1 rounded-md transition-colors"
-            >
-              {isCollapsed ? <><ChevronDown size={14} className="mr-1"/> Show Uploads</> : <><ChevronUp size={14} className="mr-1"/> Hide Uploads</>}
-            </button>
-          )}
-        </h2>
-        <div className="flex items-center gap-3">
-          {stats && (
-            <button 
-              onClick={handleReset}
-              className="text-sm font-medium text-red-600 hover:text-red-700 dark:text-red-400 flex items-center gap-1 bg-red-50 dark:bg-red-900/20 px-3 py-1.5 rounded-lg transition-colors"
-            >
-              <RotateCcw size={16} /> Start Over
-            </button>
-          )}
-          <button 
-            onClick={() => setShowInstructions(true)}
-            className="text-sm font-medium text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 flex items-center gap-1"
-          >
-            <Info size={16} /> Instructions
-          </button>
+      {/* Header Info */}
+      <div className="bg-indigo-50 dark:bg-indigo-900/20 border border-indigo-100 dark:border-indigo-800 p-6 rounded-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div className="flex items-start gap-3">
+          <Users className="text-indigo-600 dark:text-indigo-400 shrink-0 mt-1" size={24} />
+          <div>
+            <h2 className="text-lg font-bold text-indigo-900 dark:text-white">Analyze Followers</h2>
+            <div className="text-sm text-indigo-700 dark:text-indigo-300 space-y-1 mt-1">
+              <p>
+                Compare your followers and following lists to discover who isn't following you back, identify fans, and mutual connections.
+              </p>
+              <button 
+                onClick={() => setShowInstructions(true)}
+                className="font-medium underline hover:text-indigo-900 dark:hover:text-indigo-100 flex items-center gap-1 mt-2"
+              >
+                <Info size={14} /> Instructions on how to get your data
+              </button>
+            </div>
+          </div>
         </div>
       </div>
+
+      {/* Action Buttons (Visible only when stats exist) */}
+      {stats && (
+        <div className="flex justify-end items-center gap-3">
+          <button 
+            onClick={() => setIsCollapsed(!isCollapsed)}
+            className="text-xs font-medium text-slate-500 hover:text-primary flex items-center bg-slate-100 dark:bg-slate-800 px-3 py-2 rounded-lg transition-colors"
+          >
+            {isCollapsed ? <><ChevronDown size={14} className="mr-1"/> Show Uploads</> : <><ChevronUp size={14} className="mr-1"/> Hide Uploads</>}
+          </button>
+          <button 
+            onClick={handleReset}
+            className="text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400 flex items-center gap-1 bg-red-50 dark:bg-red-900/20 px-3 py-2 rounded-lg transition-colors"
+          >
+            <RotateCcw size={14} /> Start Over
+          </button>
+        </div>
+      )}
 
       <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-500 ease-in-out overflow-hidden ${isCollapsed ? 'max-h-0 opacity-0 m-0 p-0' : 'max-h-[1000px] opacity-100 p-1'}`}>
         <FileDrop 
