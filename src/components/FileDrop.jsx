@@ -11,32 +11,31 @@ const FileDrop = ({ label, onFileLoaded, fileData, fileName, color = "indigo", f
     if (!acceptedFiles || acceptedFiles.length === 0) return;
 
     const validFiles = [];
+    let detectedType = fileType;
     
     // Strict Validation Loop
     for (const file of acceptedFiles) {
       const name = file.name.toLowerCase();
       
       // 1. Excel Check
-      const isExcel = name.endsWith('.xlsx') || name.endsWith('.csv');
-      if (fileType === 'excel' && !isExcel) {
-         setError("Invalid file. Please upload an Excel (.xlsx) file.");
-         return;
+      if (fileType === 'excel') {
+         const isExcel = name.endsWith('.xlsx') || name.endsWith('.csv');
+         if (!isExcel) {
+            setError("Invalid file. Please upload an Excel (.xlsx) file.");
+            return;
+         }
+         validFiles.push(file);
+         continue;
       }
 
-      // 2. Following Check (Must have 'following' in name)
-      if (fileType === 'following') {
-        if (!name.includes('following')) {
-            setError(`Invalid file: "${file.name}". Please upload 'following.json' or 'following.html'.`);
-            return;
-        }
-      }
-      
-      // 3. Followers Check (Must have 'follower' in name)
-      if (fileType === 'followers') {
-        if (!name.includes('follower')) { // Matches 'followers' or 'follower'
-            setError(`Invalid file: "${file.name}". Please upload 'followers_1.json' or 'followers_1.html'.`);
-            return;
-        }
+      // 2. Smart Routing for JSON/HTML
+      if (name.includes('following')) {
+        detectedType = 'following';
+      } else if (name.includes('follower')) {
+        detectedType = 'followers';
+      } else {
+        setError(`Invalid file: "${file.name}". Please upload a file containing 'follower' or 'following' in the name.`);
+        return;
       }
 
       validFiles.push(file);
@@ -45,7 +44,8 @@ const FileDrop = ({ label, onFileLoaded, fileData, fileName, color = "indigo", f
     if (allowMultiple) {
       onFileLoaded(validFiles);
     } else {
-      onFileLoaded(validFiles[0]);
+      // Pass the smartly detected type back to the parent
+      onFileLoaded(validFiles[0], detectedType);
     }
 
   }, [onFileLoaded, fileType, allowMultiple]);

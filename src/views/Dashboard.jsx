@@ -19,6 +19,28 @@ const Dashboard = () => {
   const [showInstructions, setShowInstructions] = useState(false);
   const [isCollapsed, setIsCollapsed] = useState(false);
 
+  // Lifted state: manage hidden users at the Dashboard level
+  const [hiddenUsers, setHiddenUsers] = useState(() => {
+    try {
+      const saved = localStorage.getItem('deactivatedUsers');
+      const parsed = saved ? JSON.parse(saved) : [];
+      return Array.isArray(parsed) ? parsed : [];
+    } catch { 
+      return []; 
+    }
+  });
+
+  const handleToggleDeactivated = (username) => {
+    setHiddenUsers(prev => {
+      const next = prev.includes(username) ? prev.filter(u => u !== username) : [...prev, username];
+      try { localStorage.setItem('deactivatedUsers', JSON.stringify(next)); } catch (e) {}
+      return next;
+    });
+  };
+
+  // Helper to remove hidden users from the stats count
+  const getActiveCount = (list) => list ? list.filter(u => !hiddenUsers.includes(u.username)).length : 0;
+
   useEffect(() => {
     const hasVisited = localStorage.getItem('hasVisitedV2');
     if (!hasVisited) {
@@ -124,7 +146,7 @@ const Dashboard = () => {
           fileData={followers}
           fileName={followersName}
           fileType="followers"
-          onFileLoaded={(f) => handleUpload(f, 'followers')} 
+          onFileLoaded={(f, detectedType) => handleUpload(f, detectedType || 'followers')} 
         />
         <FileDrop 
           label="Upload Following" 
@@ -132,7 +154,7 @@ const Dashboard = () => {
           fileData={following}
           fileName={followingName}
           fileType="following"
-          onFileLoaded={(f) => handleUpload(f, 'following')} 
+          onFileLoaded={(f, detectedType) => handleUpload(f, detectedType || 'following')} 
         />
       </div>
 
@@ -152,7 +174,7 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <StatsCard 
               title="Not Following Back" 
-              count={stats.nonFollowers.length} 
+              count={getActiveCount(stats.nonFollowers)} 
               total={following.length}
               color="red"
               icon={UserMinus}
@@ -161,7 +183,7 @@ const Dashboard = () => {
             />
             <StatsCard 
               title="Fans (They Follow You)" 
-              count={stats.fans.length} 
+              count={getActiveCount(stats.fans)} 
               total={followers.length}
               color="amber"
               icon={UserPlus}
@@ -170,7 +192,7 @@ const Dashboard = () => {
             />
             <StatsCard 
               title="Mutual Followers" 
-              count={stats.mutual.length} 
+              count={getActiveCount(stats.mutual)} 
               total={followers.length}
               color="green"
               icon={Users}
@@ -197,9 +219,9 @@ const Dashboard = () => {
               </div>
             )}
 
-            {activeTab === 'non' && <DataTable data={stats.nonFollowers} title="People you follow who don't follow back" />}
-            {activeTab === 'fans' && <DataTable data={stats.fans} title="People who follow you but you don't follow back" />}
-            {activeTab === 'mutual' && <DataTable data={stats.mutual} title="Mutual Connections" />}
+            {activeTab === 'non' && <DataTable data={stats.nonFollowers} title="People you follow who don't follow back" hiddenUsers={hiddenUsers} onToggleDeactivated={handleToggleDeactivated} />}
+            {activeTab === 'fans' && <DataTable data={stats.fans} title="People who follow you but you don't follow back" hiddenUsers={hiddenUsers} onToggleDeactivated={handleToggleDeactivated} />}
+            {activeTab === 'mutual' && <DataTable data={stats.mutual} title="Mutual Connections" hiddenUsers={hiddenUsers} onToggleDeactivated={handleToggleDeactivated} />}
           </div>
         </div>
       )}

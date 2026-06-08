@@ -1,5 +1,5 @@
 import React from 'react';
-import { X, FileJson, CheckCircle, ExternalLink, ArrowRight, MousePointerClick } from 'lucide-react';
+import { X, FileJson, CheckCircle, ExternalLink, ArrowRight, MousePointerClick, Ghost } from 'lucide-react';
 
 const InstructionsModal = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
@@ -119,6 +119,17 @@ const InstructionsModal = ({ isOpen, onClose }) => {
                 </li>
               </ul>
             </div>
+          </div>
+
+          {/* Extra Tip: Deactivated Accounts */}
+          <div className="mt-8 bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-200 dark:border-amber-800">
+            <h3 className="font-bold text-amber-900 dark:text-amber-100 mb-2 flex items-center gap-2">
+              <Ghost size={18} className="text-amber-600 dark:text-amber-400" />
+              Dealing with Deactivated Accounts
+            </h3>
+            <p className="text-sm text-amber-800 dark:text-amber-200 leading-relaxed">
+              Instagram's export files may not specify if an account has been deleted or deactivated. If you notice a "ghost" account in your lists that no longer exists, you can click the <strong>Ghost icon</strong> next to their name to manually mark them as deactivated. The app will remember your hidden accounts for future visits (in this browser)!
+            </p>
           </div>
 
         </div>
