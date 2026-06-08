@@ -78,7 +78,7 @@ const MainLayout = ({ children }) => {
             <Link to="/terms" className="hover:text-indigo-500 transition-colors">Terms of Service</Link>
             <Link to="/disclaimer" className="hover:text-indigo-500 transition-colors">Disclaimer</Link>
           </div>
-          <p className="mt-6 text-xs opacity-50">&copy; {new Date().getFullYear()} FollowersCompare | v0.22 | All rights reserved.</p>
+          <p className="mt-6 text-xs opacity-50">&copy; {new Date().getFullYear()} FollowersCompare | v0.2.2</p>
         </div>
       </footer>
     </div>
