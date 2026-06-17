@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import FileDrop from '../components/FileDrop';
 import { parseFile } from '../utils/parser';
 import { TrendingUp, Calendar, UserPlus, UserMinus, RotateCcw, PlayCircle, FileText, Trash2, AlertCircle } from 'lucide-react';
+import { trackEvent } from '../utils/analytics';
 
 const Trends = () => {
   const [stagedFiles, setStagedFiles] = useState([]);
@@ -33,6 +34,7 @@ const Trends = () => {
       return;
     }
 
+    trackEvent('trends_analysis_started', { fileCount: stagedFiles.length });
     setIsAnalyzing(true);
     try {
       const processed = await Promise.all(
@@ -80,6 +82,7 @@ const Trends = () => {
   };
 
   const clearAll = () => {
+    trackEvent('trends_reset');
     setStagedFiles([]);
     setSnapshots([]);
   };

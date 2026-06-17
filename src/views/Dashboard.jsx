@@ -7,6 +7,7 @@ import { parseFile } from '../utils/parser';
 import { processLists } from '../utils/logic';
 import { downloadExcel } from '../utils/export';
 import { Users, UserMinus, UserPlus, Download, Info, ChevronDown, ChevronUp, AlertTriangle, RotateCcw } from 'lucide-react';
+import { trackEvent } from '../utils/analytics';
 
 const Dashboard = () => {
   const [followers, setFollowers] = useState([]);
@@ -45,6 +46,7 @@ const Dashboard = () => {
     const hasVisited = localStorage.getItem('hasVisitedV2');
     if (!hasVisited) {
       setShowInstructions(true);
+      trackEvent('instructions_opened', { source: 'auto_first_visit' });
       localStorage.setItem('hasVisitedV2', 'true');
     }
   }, []);
@@ -75,11 +77,17 @@ const Dashboard = () => {
       const res = processLists(followers, following);
       setStats(res);
       setIsCollapsed(true);
+      trackEvent('analysis_completed', { 
+        mutuals: res.mutual.length, 
+        fans: res.fans.length, 
+        nonFollowers: res.nonFollowers.length 
+      });
     }
   }, [followers, following]);
 
   const handleDownload = () => {
     if (!stats) return;
+    trackEvent('export_report_clicked');
     downloadExcel({
       "Non-Followers": stats.nonFollowers,
       "Fans": stats.fans,
@@ -88,6 +96,7 @@ const Dashboard = () => {
   };
 
   const handleReset = () => {
+    trackEvent('dashboard_reset');
     setFollowers([]);
     setFollowing([]);
     setFollowersName(null);
@@ -111,7 +120,10 @@ const Dashboard = () => {
                 Compare your followers and following lists to discover who isn't following you back, identify fans, and mutual connections.
               </p>
               <button 
-                onClick={() => setShowInstructions(true)}
+                onClick={() => {
+                  setShowInstructions(true);
+                  trackEvent('instructions_opened', { source: 'manual_click' });
+                }}
                 className="font-medium underline hover:text-indigo-900 dark:hover:text-indigo-100 flex items-center gap-1 mt-2"
               >
                 <Info size={14} /> Instructions on how to get your data
@@ -179,7 +191,10 @@ const Dashboard = () => {
               color="red"
               icon={UserMinus}
               active={activeTab === 'non'}
-              onClick={() => setActiveTab('non')}
+              onClick={() => {
+                setActiveTab('non');
+                trackEvent('tab_changed', { tab: 'non_followers' });
+              }}
             />
             <StatsCard 
               title="Fans (They Follow You)" 
@@ -188,7 +203,10 @@ const Dashboard = () => {
               color="amber"
               icon={UserPlus}
               active={activeTab === 'fans'}
-              onClick={() => setActiveTab('fans')}
+              onClick={() => {
+                setActiveTab('fans');
+                trackEvent('tab_changed', { tab: 'fans' });
+              }}
             />
             <StatsCard 
               title="Mutual Followers" 
@@ -197,7 +215,10 @@ const Dashboard = () => {
               color="green"
               icon={Users}
               active={activeTab === 'mutual'}
-              onClick={() => setActiveTab('mutual')}
+              onClick={() => {
+                setActiveTab('mutual');
+                trackEvent('tab_changed', { tab: 'mutuals' });
+              }}
             />
           </div>
 

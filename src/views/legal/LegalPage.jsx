@@ -1,8 +1,14 @@
 import React from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const LegalPage = ({ title, lastUpdated, children }) => {
   return (
     <div className="max-w-4xl mx-auto bg-white dark:bg-slate-800 p-8 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 my-8 animate-in fade-in duration-300">
+      <Helmet>
+        <title>{title} - FollowersCompare</title>
+        <meta name="description" content={`Read the ${title} documentation for FollowersCompare.`} />
+      </Helmet>
+      
       <h1 className="text-3xl font-bold mb-2 dark:text-white">{title}</h1>
       <p className="text-sm text-slate-500 mb-8 border-b border-slate-100 dark:border-slate-700 pb-6">Last Updated: {lastUpdated}</p>
       

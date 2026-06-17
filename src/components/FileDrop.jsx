@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { UploadCloud, CheckCircle, AlertTriangle, X, Files } from 'lucide-react';
+import { trackEvent } from '../utils/analytics';
 
 const FileDrop = ({ label, onFileLoaded, fileData, fileName, color = "indigo", fileType, allowMultiple = false }) => {
   const [error, setError] = useState(null);
@@ -43,9 +44,11 @@ const FileDrop = ({ label, onFileLoaded, fileData, fileName, color = "indigo", f
 
     if (allowMultiple) {
       onFileLoaded(validFiles);
+      trackEvent('file_dropped', { fileType: 'excel', count: validFiles.length });
     } else {
       // Pass the smartly detected type back to the parent
       onFileLoaded(validFiles[0], detectedType);
+      trackEvent('file_dropped', { fileType: detectedType });
     }
 
   }, [onFileLoaded, fileType, allowMultiple]);

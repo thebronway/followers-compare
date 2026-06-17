@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ShieldCheck, Moon, Sun } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import Footer from '../components/Footer';
+import { trackEvent } from '../utils/analytics';
 
 const MainLayout = ({ children }) => {
   const location = useLocation();
@@ -27,6 +29,10 @@ const MainLayout = ({ children }) => {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 transition-colors duration-300 font-sans flex flex-col">
+      <Helmet>
+        <title>FollowersCompare - Private Local Instagram Analytics</title>
+        <meta name="description" content="Safely analyze who unfollowed you on Instagram. 100% private, client-side processing using your official data export without giving up your password." />
+      </Helmet>
       
       {/* Navbar */}
       <header className="border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-50">
@@ -47,10 +53,17 @@ const MainLayout = ({ children }) => {
               <Link to="/trends" className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${location.pathname === '/trends' ? 'bg-white dark:bg-slate-700 shadow-sm text-indigo-600 dark:text-indigo-400' : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-300'}`}>
                 Trends
               </Link>
+              <Link to="/blog" className={`px-4 py-1.5 text-sm font-medium rounded-md transition-all ${location.pathname.startsWith('/blog') ? 'bg-white dark:bg-slate-700 shadow-sm text-indigo-600 dark:text-indigo-400' : 'text-slate-500 hover:text-slate-900 dark:hover:text-slate-300'}`}>
+                Blog
+              </Link>
             </div>
 
             <button
-              onClick={() => setIsDark(!isDark)}
+              onClick={() => {
+                const newTheme = !isDark;
+                setIsDark(newTheme);
+                trackEvent('theme_toggled', { theme: newTheme ? 'dark' : 'light' });
+              }}
               className="p-2 rounded-lg text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800 transition-colors"
               aria-label="Toggle Theme"
             >
