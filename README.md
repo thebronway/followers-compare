@@ -1,6 +1,6 @@
 # Followers Compare & Trend Analysis
 
-![Version](https://img.shields.io/badge/version-v0.2.2-blue.svg)
+![Version](https://img.shields.io/badge/version-v0.3.0-blue.svg)
 ![Privacy](https://img.shields.io/badge/privacy-100%25_client--side-green.svg)
 
 A local, privacy-focused tool to analyze your Instagram connections. Compare your "Followers" vs "Following" to see who isn't following you back, and track follower trends (gains/losses) over time using historical data.

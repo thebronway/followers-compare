@@ -1,7 +1,7 @@
 # FollowersCompare Roadmap
 
-*Last updated: 2026-06-08*  
-*Current Version: v0.2.5*
+*Last updated: 2026-06-17*  
+*Current Version: v0.3.0*
 
 ## Overview
 This document tracks planned improvements, enhancements, and technical debt for FollowersCompare.
